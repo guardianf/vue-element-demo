@@ -13,6 +13,12 @@ const componentsRouter = {
   },
   children: [
     {
+      path: 'univer',
+      component: () => import('@/views/components-demo/univer'),
+      name: 'UniverDemo',
+      meta: { title: 'Univer Editor' }
+    },
+    {
       path: 'tinymce',
       component: () => import('@/views/components-demo/tinymce'),
       name: 'TinymceDemo',
