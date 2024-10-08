@@ -309,6 +309,23 @@ export const asyncRoutes = [
       }
     ]
   },
+  // 在线报价
+  {
+    path: '/pricelist',
+    component: Layout,
+    redirect: '/pricelist/list',
+    name: 'PriceList',
+    meta: {
+      title: 'PriceList',
+      icon: 'list'
+    },
+    children: [{
+      path: '/pricelist/list',
+      component: () => import('@/views/online-pricelist/index.vue'),
+      name: 'PriceList',
+      meta: { title: 'Online PriceList' }
+    }]
+  },
 
   {
     path: '/zip',
