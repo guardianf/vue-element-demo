@@ -7,9 +7,9 @@
       <el-select v-model="listQuery.project" size="mini" clearable>
         <el-option v-for="item in projects" :key="item.id" :label="item.name" :value="item.id" />
       </el-select>
-      <a v-if="isCard" @click="switchStyle('list')">列表查看</a>
-      <a v-else @click="switchStyle('card')">缩略图查看</a>
-      <a>上传文件</a>
+      <a v-if="isCard" @click="handleSwitch('list')">列表查看</a>
+      <a v-else @click="handleSwitch('card')">缩略图查看</a>
+      <a @click="handleNew">上传文件</a>
     </div>
     <div class="body">
       <template v-if="!isCard">
@@ -57,6 +57,7 @@
         <vue-office-docx :src="src" style="height: 100vh;" @rendered="rendered" />
       </el-tab-pane>
     </el-tabs>
+    <create-dialog ref="create" :projects="projects" />
   </div>
 </template>
 
@@ -117,7 +118,8 @@
 <script>
 import VueOfficeDocx from '@vue-office/docx'
 import '@vue-office/docx/lib/index.css'
-import { getProjects, uploadThumbnail } from '@/api/online'
+import { getProjects, uploadThumbnail, deleteProject } from '@/api/online'
+import CreateDialog from './components/Create'
 
 const STYLE = {
   CARD: Symbol('card'),
@@ -127,7 +129,7 @@ const STYLE = {
 export default {
   name: 'PriceList',
   components: {
-    VueOfficeDocx
+    VueOfficeDocx, CreateDialog
   },
   data() {
     return {
@@ -157,7 +159,7 @@ export default {
     rendered() {
       console.log('渲染完成')
     },
-    switchStyle(type) {
+    handleSwitch(type) {
       switch (type) {
         case 'card':
           this.style = STYLE.CARD
@@ -167,8 +169,10 @@ export default {
           break
       }
     },
-    onDelete(row) {
+    async onDelete(row) {
       console.log('delete:', row)
+      await deleteProject(row.id)
+      this.getProjects()
     },
     uploadImage(row) {
       const uploader = document.createElement('input')
@@ -184,6 +188,9 @@ export default {
     },
     getImageUrl(url) {
       return process.env.VUE_APP_BASE_API + '/file/' + url
+    },
+    handleNew() {
+      this.$refs.create.open()
     }
   }
 }
