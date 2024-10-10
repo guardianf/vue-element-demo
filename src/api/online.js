@@ -1,11 +1,11 @@
-import request from '../utils/request'
+import request from '../utils/request_file'
 /**
  * 获取项目
  * @returns Promise
  */
 export const getProjects = () => {
   return request({
-    url: '/file/projects',
+    url: '/projects',
     method: 'get'
   })
 }
@@ -22,7 +22,7 @@ export const uploadThumbnail = (params) => {
   const form = new FormData()
   form.append('file', file)
   return request({
-    url: `/file/project/${id}/uploadimage`,
+    url: `/project/${id}/uploadimage`,
     method: 'post',
     data: form
   })
@@ -30,7 +30,22 @@ export const uploadThumbnail = (params) => {
 
 export const deleteProject = id => {
   return request({
-    url: `/file/project/${id}`,
+    url: `/project/${id}`,
     method: 'delete'
+  })
+}
+
+export const getProjectFileConstruction = id => {
+  return request({
+    url: `/constructions/${id}`,
+    method: 'get'
+  })
+}
+
+export const updateProjectFileConstruction = (id, data) => {
+  return request({
+    url: `/constructions/${id}`,
+    method: 'post',
+    data
   })
 }

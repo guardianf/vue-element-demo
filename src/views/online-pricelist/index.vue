@@ -133,7 +133,7 @@ export default {
   },
   data() {
     return {
-      src: '/file/example.docx',
+      src: '/example.docx',
       style: STYLE.CARD,
       projects: [],
       listQuery: {
@@ -187,7 +187,7 @@ export default {
       uploader.click()
     },
     getImageUrl(url) {
-      return process.env.VUE_APP_BASE_API + '/file/' + url
+      return process.env.VUE_APP_BASE_API + '/' + url
     },
     handleNew() {
       this.$refs.create.open()

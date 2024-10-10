@@ -324,6 +324,11 @@ export const asyncRoutes = [
       component: () => import('@/views/online-pricelist/index.vue'),
       name: 'PriceList',
       meta: { title: 'Online PriceList' }
+    }, {
+      path: '/pricelist/define',
+      component: () => import('@/views/online-project-construction/index.vue'),
+      name: 'Define',
+      meta: { title: 'Online Define' }
     }]
   },
 
