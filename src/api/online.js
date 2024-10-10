@@ -5,7 +5,7 @@ import request from '../utils/request_file'
  */
 export const getProjects = () => {
   return request({
-    url: '/projects',
+    url: '/project/list',
     method: 'get'
   })
 }
