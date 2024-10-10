@@ -49,3 +49,17 @@ export const updateProjectFileConstruction = (id, data) => {
     data
   })
 }
+
+export const getGroupByProjectId = id => {
+  return request({
+    url: `/constructions/${id}/typegroups`,
+    method: 'get'
+  })
+}
+
+export const getTypeByProjectAndGroup = (project, group) => {
+  return request({
+    url: `/constructions/${project}/typegroups/${group}`,
+    method: 'get'
+  })
+}
