@@ -52,14 +52,50 @@ export const updateProjectFileConstruction = (id, data) => {
 
 export const getGroupByProjectId = id => {
   return request({
-    url: `/constructions/${id}/typegroups`,
+    url: `/constructions/${id}/groups`,
     method: 'get'
   })
 }
 
 export const getTypeByProjectAndGroup = (project, group) => {
   return request({
-    url: `/constructions/${project}/typegroups/${group}`,
+    url: `/constructions/${project}/groups/${group}`,
     method: 'get'
+  })
+}
+
+export const getFileLimit = (project, group, type) => {
+  return request({
+    url: `/constructions/${project}/groups/${group}/types/${type}/limit`,
+    method: 'get'
+  })
+}
+
+export const getPsnls = () => {
+  return request({
+    url: '/persons',
+    method: 'get'
+  })
+}
+
+export const getMimetypes = () => {
+  return request({
+    url: '/mimetypes',
+    method: 'get'
+  })
+}
+
+export const uploadFile = (data) => {
+  const form = new FormData()
+  for (const key in data) {
+    form.append(key, data[key])
+  }
+  return request({
+    url: `/constructions/upload`,
+    method: 'post',
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    },
+    data: form
   })
 }

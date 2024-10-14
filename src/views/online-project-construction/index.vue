@@ -84,7 +84,7 @@
 </style>
 
 <script>
-import { getProjects, getProjectFileConstruction, updateProjectFileConstruction } from '@/api/online'
+import { getProjects, getProjectFileConstruction, updateProjectFileConstruction, getMimetypes } from '@/api/online'
 
 export default {
   data() {
@@ -93,10 +93,7 @@ export default {
       listQuery: {
         project: ''
       },
-      types: [{
-        key: 1,
-        name: 'png'
-      }],
+      types: [],
       treeData: []
     }
   },
@@ -120,6 +117,9 @@ export default {
   created() {
     getProjects().then(res => {
       this.projects = res.data
+    })
+    getMimetypes().then(res => {
+      this.types = res.data
     })
   },
   methods: {
