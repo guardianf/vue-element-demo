@@ -40,13 +40,13 @@
       </template>
       <template v-else>
         <div class="card-container">
-          <div v-for="item in dataList" :key="item.id" class="card">
+          <div v-for="item in dataList" :key="item.id" class="card" @click="detail(item.id)">
             <el-image :src="getImageUrl(item.image)" />
             <div class="row">
               <span>{{ item.name }}</span><span>{{ item.date }}</span>
             </div>
             <div class="row">
-              <el-progress :percentage="item.percentage" />
+              <el-progress :percentage="item.percentage | percentage" />
               <a @click="uploadImage(item)">缩略图上传</a></div>
           </div>
         </div>
@@ -90,6 +90,7 @@
     flex-wrap: wrap;
     gap: 5px;
   .card {
+    cursor: pointer;
     display: flex;
     flex-flow: column;
     width: calc(33%);
@@ -120,6 +121,7 @@ import VueOfficeDocx from '@vue-office/docx'
 import '@vue-office/docx/lib/index.css'
 import { getProjects, uploadThumbnail, deleteProject } from '@/api/online'
 import CreateDialog from './components/Create'
+import { percentage } from '@/filters'
 
 const STYLE = {
   CARD: Symbol('card'),
@@ -131,6 +133,7 @@ export default {
   components: {
     VueOfficeDocx, CreateDialog
   },
+  filters: { percentage },
   data() {
     return {
       src: '/example.docx',
@@ -180,17 +183,19 @@ export default {
       uploader.accept = '.png,.jpg'
       uploader.onchange = e => {
         console.log(e.target.files[0])
-        // TODO: uploadimage
         uploadThumbnail({ id: row.id, file: e.target.files[0] })
         this.getProjects()
       }
       uploader.click()
     },
     getImageUrl(url) {
-      return process.env.VUE_APP_BASE_API + '/' + url
+      return process.env.VUE_APP_BASE_API + '/api/' + url
     },
     handleNew() {
       this.$refs.create.open()
+    },
+    detail(id) {
+      this.$router.push({ path: '/pricelist/detail', query: { id }})
     }
   }
 }

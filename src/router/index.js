@@ -323,12 +323,17 @@ export const asyncRoutes = [
       path: '/pricelist/list',
       component: () => import('@/views/online-pricelist/index.vue'),
       name: 'PriceList',
-      meta: { title: 'Online PriceList' }
+      meta: { title: 'Online PriceList' },
     }, {
       path: '/pricelist/define',
       component: () => import('@/views/online-project-construction/index.vue'),
       name: 'Define',
       meta: { title: 'Online Define' }
+    }, {
+      path: '/pricelist/detail',
+      component: () => import('@/views/online-project-detail/index.vue'),
+      name: 'ProjectDetail',
+      meta: { title: 'Online ProjectDetail', hidden: true }
     }]
   },
 

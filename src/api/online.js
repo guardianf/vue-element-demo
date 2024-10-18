@@ -28,6 +28,13 @@ export const uploadThumbnail = (params) => {
   })
 }
 
+export const getProject = id => {
+  return request({
+    url: `/project/${id}`,
+    method: 'get'
+  })
+}
+
 export const deleteProject = id => {
   return request({
     url: `/project/${id}`,
