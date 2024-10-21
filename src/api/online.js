@@ -5,7 +5,7 @@ import request from '../utils/request_file'
  */
 export const getProjects = () => {
   return request({
-    url: '/project/list',
+    url: '/projects/list',
     method: 'get'
   })
 }
@@ -22,7 +22,7 @@ export const uploadThumbnail = (params) => {
   const form = new FormData()
   form.append('file', file)
   return request({
-    url: `/project/${id}/uploadimage`,
+    url: `/projects/${id}/uploadimage`,
     method: 'post',
     data: form
   })
@@ -30,14 +30,14 @@ export const uploadThumbnail = (params) => {
 
 export const getProject = id => {
   return request({
-    url: `/project/${id}`,
+    url: `/projects/${id}`,
     method: 'get'
   })
 }
 
 export const deleteProject = id => {
   return request({
-    url: `/project/${id}`,
+    url: `/projects/${id}`,
     method: 'delete'
   })
 }
@@ -104,5 +104,14 @@ export const uploadFile = (data) => {
       'Content-Type': 'multipart/form-data'
     },
     data: form
+  })
+}
+
+export const getBatchDownload = ids => {
+  return request({
+    url: `/download`,
+    method: 'post',
+    data: ids,
+    responseType: 'blob'
   })
 }

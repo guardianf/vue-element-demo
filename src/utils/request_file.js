@@ -43,8 +43,31 @@ service.interceptors.response.use(
    * You can also judge the status by HTTP Status Code
    */
   response => {
-    const res = response.data
+    const config = response.config
+    const url = config.url
+    if (url.indexOf('download') !== -1) {
+      const contentDisposition = response.headers['content-disposition']
+      const matches = /"([^"]*)"/.exec(contentDisposition)
+      let filename
+      if (matches != null && matches[1]) {
+        filename = matches[1]
+        // 接下来可以基于filename处理文件下载等
+        const blob = new Blob([response.data])
+        // 创建一个指向该对象的URL
+        const href = URL.createObjectURL(blob, { type: response.headers['Content-Type'] })// 创建新的URL表示指定的blob对象
+        const a = document.createElement('a')// 创建a标签
+        a.style.display = 'none'
+        // 指定下载链接
+        a.href = href
+        // 指定下载文件名
+        a.setAttribute('download', filename)
+        a.click()// 触发下载
+        URL.revokeObjectURL(a.href)// 释放URL对象
+        return blob
+      }
+    }
 
+    const res = response.data
     // if the custom code is not 20000, it is judged as an error.
     if (res.code !== 20000) {
       Message({
