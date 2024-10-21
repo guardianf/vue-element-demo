@@ -1,5 +1,6 @@
 // import parseTime, formatTime and set to filter
 export { parseTime, formatTime } from '@/utils'
+import dayjs from 'dayjs'
 
 /**
  * Show plural label if time is plural number
@@ -69,4 +70,8 @@ export function uppercaseFirst(string) {
 
 export function percentage(val) {
   return val * 100
+}
+
+export function toDate(val) {
+  return dayjs(val).format('YYYY-MM-DD HH:mm:ss')
 }

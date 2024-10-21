@@ -4,7 +4,7 @@
       <h4>项目交付文件</h4>
       <span class="flex-1" />
       <label>项目名称</label>
-      <el-select v-model="listQuery.project" size="mini" clearable>
+      <el-select v-model="listQuery.id" size="mini" clearable>
         <el-option v-for="item in projects" :key="item.id" :label="item.name" :value="item.id" />
       </el-select>
       <a v-if="isCard" @click="handleSwitch('list')">列表查看</a>
@@ -24,7 +24,7 @@
           </el-table-column>
           <el-table-column label="文件审核/上传时间" prop="times">
             <template slot-scope="scope">
-              {{ scope.row.audit_time }}/{{ scope.row.upload_time }}
+              {{ scope.row.audit_time }}/{{ scope.row.create_time }}
             </template>
           </el-table-column>
           <el-table-column label="操作" prop="opr">
@@ -43,7 +43,7 @@
           <div v-for="item in dataList" :key="item.id" class="card" @click="detail(item.id)">
             <el-image :src="getImageUrl(item.image)" />
             <div class="row">
-              <span>{{ item.name }}</span><span>{{ item.date }}</span>
+              <span>{{ item.name }}</span><span>{{ item.create_time | toDate }}</span>
             </div>
             <div class="row">
               <el-progress :percentage="item.percentage | percentage" />
@@ -121,7 +121,7 @@ import VueOfficeDocx from '@vue-office/docx'
 import '@vue-office/docx/lib/index.css'
 import { getProjects, uploadThumbnail, deleteProject } from '@/api/online'
 import CreateDialog from './components/Create'
-import { percentage } from '@/filters'
+import { percentage, toDate } from '@/filters'
 
 const STYLE = {
   CARD: Symbol('card'),
@@ -133,14 +133,14 @@ export default {
   components: {
     VueOfficeDocx, CreateDialog
   },
-  filters: { percentage },
+  filters: { percentage, toDate },
   data() {
     return {
       src: '/example.docx',
       style: STYLE.CARD,
       projects: [],
       listQuery: {
-        project: ''
+        id: ''
       },
       dataList: []
     }
@@ -150,12 +150,17 @@ export default {
       return this.style === STYLE.CARD
     }
   },
+  watch: {
+    'listQuery.id'() {
+      this.getProjects()
+    }
+  },
   created() {
     this.getProjects()
   },
   methods: {
     async getProjects() {
-      const { data } = await getProjects()
+      const { data } = await getProjects(this.listQuery)
       this.projects = data
       this.dataList = data
     },
@@ -173,7 +178,6 @@ export default {
       }
     },
     async onDelete(row) {
-      console.log('delete:', row)
       await deleteProject(row.id)
       this.getProjects()
     },

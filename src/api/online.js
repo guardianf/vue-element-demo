@@ -3,10 +3,11 @@ import request from '../utils/request_file'
  * 获取项目
  * @returns Promise
  */
-export const getProjects = () => {
+export const getProjects = (params) => {
   return request({
-    url: '/projects/list',
-    method: 'get'
+    url: '/projects',
+    method: 'get',
+    params
   })
 }
 
