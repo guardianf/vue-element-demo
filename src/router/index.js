@@ -218,6 +218,12 @@ export const asyncRoutes = [
         component: () => import('@/views/example/list'),
         name: 'ArticleList',
         meta: { title: 'Article List', icon: 'list' }
+      },
+      {
+        path: 'ocr',
+        component: () => import('@/views/OCR'),
+        name: 'Ocr',
+        meta: { title: 'Ocr', icon: 'ocr' }
       }
     ]
   },
