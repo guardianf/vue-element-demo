@@ -5,7 +5,7 @@ import request from '../utils/request_file'
  */
 export const getProjects = (params) => {
   return request({
-    url: '/projects',
+    url: '/projects/list',
     method: 'get',
     params
   })

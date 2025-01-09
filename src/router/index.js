@@ -210,7 +210,11 @@ export const asyncRoutes = [
         path: 'edit/:id(\\d+)',
         component: () => import('@/views/example/edit'),
         name: 'EditArticle',
-        meta: { title: 'Edit Article', noCache: true, activeMenu: '/example/list' },
+        meta: {
+          title: 'Edit Article',
+          noCache: true,
+          activeMenu: '/example/list'
+        },
         hidden: true
       },
       {
@@ -311,30 +315,34 @@ export const asyncRoutes = [
   },
   // 在线报价
   {
-    path: '/pricelist',
+    path: '/project',
     component: Layout,
-    redirect: '/pricelist/list',
-    name: 'PriceList',
+    redirect: '/project',
+    name: 'Project',
     meta: {
-      title: 'PriceList',
+      title: 'projectList',
       icon: 'list'
     },
-    children: [{
-      path: '/pricelist/list',
-      component: () => import('@/views/online-pricelist/index.vue'),
-      name: 'PriceList',
-      meta: { title: 'Online PriceList' },
-    }, {
-      path: '/pricelist/define',
-      component: () => import('@/views/online-project-construction/index.vue'),
-      name: 'Define',
-      meta: { title: 'Online Define' }
-    }, {
-      path: '/pricelist/detail',
-      component: () => import('@/views/online-project-detail/index.vue'),
-      name: 'ProjectDetail',
-      meta: { title: 'Online ProjectDetail', hidden: true }
-    }]
+    children: [
+      {
+        path: '/project/list',
+        component: () => import('@/views/projectlist/index.vue'),
+        name: 'ProjectList',
+        meta: { title: '项目列表' }
+      },
+      {
+        path: '/project/construction',
+        component: () => import('@/views/project-construction/index.vue'),
+        name: 'Define',
+        meta: { title: '项目定义' }
+      },
+      {
+        path: '/project/detail',
+        component: () => import('@/views/project-detail/index.vue'),
+        name: 'ProjectDetail',
+        meta: { title: '项目明细', hidden: true }
+      }
+    ]
   },
 
   {

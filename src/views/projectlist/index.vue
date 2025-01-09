@@ -199,7 +199,7 @@ export default {
       this.$refs.create.open()
     },
     detail(id) {
-      this.$router.push({ path: '/pricelist/detail', query: { id }})
+      this.$router.push({ path: '/project/detail', query: { id }})
     }
   }
 }
